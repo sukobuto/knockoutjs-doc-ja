@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="keywords" content="knockout,knockoutjs,ドキュメント,MVVM,バインディング,bindings,カスタムバインディング,custombindings,">
+<meta name="description" content="JavaScriptのMVVMライブラリKnockout非公式日本語ドキュメントです。">
+<title>ドキュメントKnockout.js</title>
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<link rel="stylesheet" type="text/css" href="css/common.src.css">
+<link rel="stylesheet" type="text/css" href="css/layout.src.css">
+<!-- [if IE 7 ]> <link rel="stylesheet" href="/css/font-awesome-ie7.css"> <![endif]-->
+<!-- [if !(IE 7)]>--> <link rel="stylesheet" href="css/font-awesome.css"> <!--<![endif]-->
+<link rel="stylesheet" href="css/jquery.powertip.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.1/sammy.min.js"></script>
+<script type="text/javascript"><!--
+  window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>');
+	window.ko || document.write('<script type="text/javascript" src="js/knockout-2.1.0.js"><\/script>');
+	window.Sammy || document.write('<script type="text/javascript" src="js/sammy.min.js"><\/script>');
+//--></script>
+<script type="text/javascript" src="js/dateformat.js"></script>
+<script type="text/javascript" src="js/Base.js"></script>
+<script type="text/javascript" src="js/jquery.caret.min.js"></script>
+<script type="text/javascript" src="js/ko.customBindings.src.js"></script>
+</head>
+<body>
+
+<div id="brand_background">&nbsp;</div>
+<div id="page_wrap">
+	
+	<header>
+		<div id="title_area">
+			<h1 style="color: white;">knockout.js ドキュメント 鋭意翻訳中です。</h1>
+		</div>
+		<nav id="global_nav">
+			<ul class="hList">
+				<li class="active"><a href="/"><i class="icon-home"></i>ホーム</a></li>
+				<li><a href="/docs/introduction"><i class="icon-file"></i>ドキュメント</a></li>
+				<li><a href="/tips/"><i class="icon-pushpin"></i> Demo & Tips</a></li>
+				<!-- <li><a href="./cbf/"><i class="icon-link"></i>カスタムバインディングフォーラム</a></li> -->
+			</ul>
+		</nav>
+	</header>
+	
+	<div id="content">
+
+		<section>
+			<div id="brand">
+				<h1>Knockout</h1>
+				<h2>日本語ドキュメント</h2>
+				<p class="explain">
+					このサイトは、リッチUIがサクサク書ける<br>
+					JavaScript MVVM ライブラリ Knockout の<br>
+					非公式翻訳ドキュメントです。
+				</p>
+				<span class="version">v2.2.0 対応</span>
+				<div class="next_flow">
+					<a href="http://knockoutjs.com" title="knockoutjs.com">
+						<i class="icon-arrow-right"></i> 本家サイト
+					</a>
+					<a href="/tips/helloWorld" title="Hello world!">
+						<i class="icon-arrow-right"></i> Hello world!
+					</a>
+				</div>
+			</div>
+			<div id="demo_box">
+				<!-- デモ画面, View(画像), ViewModel(画像) -->
+				<h3>Knockout DEMO</h3>
+				<div id="demo_slidebox">
+					<div id="demo">
+						チケットを選択して下さい：
+						<select data-bind="options: tickets,
+										   optionsCaption: '- 選択 -',
+										   optionsText: 'name',
+										   value: chosenTicket"></select>
+						<button data-bind="enable: chosenTicket,
+										   click: resetTicket">クリア</button>
+						<p data-bind="with: chosenTicket">
+							選択されたチケット： <strong data-bind="text: name"></strong>
+							(<span data-bind="text: price"></span>円)
+						</p>
+					</div>
+					
+					<script type="text/javascript">
+						function TicketsViewModel() {
+							this.tickets = [
+								{ name: "エコノミークラス", price: 45000 },
+								{ name: "ビジネスクラス", price: 360000},
+								{ name: "ファーストクラス", price: 720000}
+							];
+							this.chosenTicket = ko.observable();
+							this.resetTicket = function() {
+								this.chosenTicket(null);
+							}
+						}
+						ko.applyBindings(new TicketsViewModel(), document.getElementById('demo'));
+					</script>
+					
+					<img src="img/demo_code.png">
+					
+				</div>
+			</div>
+		</section>
+		
+		<section id="home_content">
+			<article>
+				<h2>Knockoutのコンセプト</h2>
+				<dl>
+					<dt style="color: #F85B5B"><i class="icon-link"></i> 宣言型バインディング</dt>
+					<dd>UIに必要なのは ViewModel (シンプルなモデルオブジェクト) とデータバインドだけ。<br>ややこしいDOM操作なしで、動的なインターフェイスを作ることができます。</dd>
+					<dt style="color: #5FA7F5"><i class="icon-refresh"></i> UIの自動更新</dt>
+					<dd>ViewModel のプロパティが変更されると、自動的にUIの関連付けられた部分を更新します。</dd>
+					<dt style="color: #F5F55F"><i class="icon-sitemap"></i> 依存関係のトラッキング</dt>
+					<dd>データの結合や変換を実現するためのデータ間の関係チェーンを暗黙的に設定します。</dd>
+					<dt style="color: #6FEB6F"><i class="icon-copy"></i> UIテンプレート</dt>
+					<dd>幾重にもネストされたテンプレートも、バインドされた ViewModel を用いて<br>素早くUIを生成します。</dd>
+				</dl>
+				<br>
+				<a href="/docs/introduction" title="さらに詳しく" class="more">
+					<i class="icon-arrow-right"></i> さらに詳しく
+				</a>
+			</article>
+			<aside>
+				<h3>更新情報 &gt; &gt; &gt;</h3>
+				<table class="update_info">
+					<tr>
+						<td class="date">2013年1月20日</td>
+						<td class="message">
+							<a href="/tips/">Demo & Tips</a> の翻訳が完了
+						</td>
+					</tr>
+					<tr>
+						<td class="date">2012年12月15日</td>
+						<td class="message">
+							ドキュメントに並行して,<a href="/tips/">Demo & Tips</a>
+							(本家:<a href="http://knockoutjs.com/examples/">LiveExample</a>)
+							の翻訳を開始
+						</td>
+					</tr>
+					<tr>
+						<td class="date">2012年12月14日</td>
+						<td class="message">一般公開開始</td>
+					</tr>
+					<tr>
+						<td class="date">2012年11月29日</td>
+						<td class="message">スタートガイドおよびコア技術のドキュメント翻訳完了</td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				<h3>注意事項・その他...</h3>
+				<p>
+					このサイトは、<a href="http://sukobuto.com">sukobuto.com</a> の中の人が個人的に作成・管理しております。
+					ベストエフォートで運営しております。常に最新情報が掲載されているとは限りません。
+				</p>
+				<p>
+					翻訳について不備もしくはアドバイス等ございましたら、 <a href="mailto:sukobuto&#x40;gmail.com">sukobuto&#x40;gmail.com</a> までご連絡いただけたら幸いです。<br>
+					(訳文について開発者様は関与しておりませんので、開発者様あてに連絡されないようお願いいたします。)
+				</p>
+				<br>
+				<div class="g-plusone" data-annotation="inline" data-width="300"></div>
+
+				<!-- 最後の +1 ボタン タグの後に次のタグを貼り付けてください。 -->
+				<script type="text/javascript">
+				  window.___gcfg = {lang: 'ja'};
+
+				  (function() {
+					var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+					po.src = 'https://apis.google.com/js/plusone.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+				  })();
+				</script>
+			</aside>
+		</section>
+		
+	</div>
+	
+	<footer>
+		This site is unofficial Japanese translation of <a href="http://knockoutjs.com">knockoutjs.com</a>.
+		&nbsp; | &nbsp; &copy; Copyright 2012 <a href="http://sukobuto.com">sukobuto.com</a>.
+	</footer>
+	
+</div>
+
+<!-- analytics script -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28916729-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

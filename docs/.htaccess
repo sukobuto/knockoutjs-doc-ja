@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# rewrite for auto generating.
+#  HTML生成済みの場合はHTMLファイルへルーティング
+#  未生成の場合はPHPファイルへルーティング
+
+# docs html auto generating.
+RewriteBase /docs
+RewriteRule (\.php)|(\.html)$ - [L,QSA]
+RewriteRule ^$ introduction
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L,QSA]
+RewriteRule ^(.+)$ document.php?identifier=$1 [L,QSA]

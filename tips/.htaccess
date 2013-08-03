@@ -1,0 +1,17 @@
+RewriteEngine On
+RewriteBase /tips
+
+# rewrite for auto generating.
+#  HTML生成済みの場合はHTMLファイルへルーティング
+#  未生成の場合はPHPファイルへルーティング
+
+# for resources
+RewriteRule ^resources/ - [L,QSA]
+
+# tips html auto generating.
+RewriteRule (\.php)|(\.html)$ - [L,QSA]
+RewriteRule ^$ index
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L,QSA]
+RewriteRule ^(.+)$ tips.php?identifier=$1 [L,QSA]

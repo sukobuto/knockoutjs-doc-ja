@@ -1,0 +1,9 @@
+tips に追加するネタリスト的な
+
+・afterRender 系のレンダリングサポートを View に記述する
+	設計思想もしくは View の載せ替え等の諸事情により ViewModel に
+	afterRender, afterAdd, beforeRemove, beforeMove, afterMove の
+	コールバックを記述したくない場合の対処法を紹介
+	ネタバレ：View で関数定義して指定するだけ。
+	http://jsfiddle.net/sukobuto/r6HHV/1/
+

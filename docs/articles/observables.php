@@ -82,7 +82,7 @@
 		</li><li>
 			<p>
 				２つ目の引数はオプションです。ViewModel をバインドする対象のDOM要素を指定することができます。<br>
-				例： <code>ko.applyBindings(myViewModel, document.getElementById('someElementId')</code><br>
+				例： <code>ko.applyBindings(myViewModel, document.getElementById('someElementId'))</code><br>
 				これにより、ID「someElementId」が付与された要素と、その配下の要素に対してのみバインドを適用することができます。
 				１つのページに対して、部分ごとに異なる ViewModel をバインドさせるといった使い方ができます。
 			</p>

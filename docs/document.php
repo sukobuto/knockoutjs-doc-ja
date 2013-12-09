@@ -44,7 +44,7 @@ ob_start();
 $page = ob_get_contents();
 ob_end_flush();
 
-//if (file_put_contents($identifier.'.html', $page) > 0) {
-//	Util::log(LOG_INFO, __FILE__, $identifier.'.html has created.');
-//}
+if (file_put_contents($identifier.'.html', $page) > 0) {
+	Util::log(LOG_INFO, __FILE__, $identifier.'.html has created.');
+}
 ?>

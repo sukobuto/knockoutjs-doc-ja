@@ -9,6 +9,15 @@
 	<p>
 		このサンプルでは、アニメーションを実装する2つの方法を示します。
 	</p>
+	<blockquote>
+		<h3>※訳者注</h3>
+		<p>
+			このサンプルは、コードのシンプルさにおいて問題があると訳者は考えております。<br/>
+			詳しくは <a href="http://qiita.com/sukobuto/items/9fc4bdc3463f13bdc00c" target="_blank">
+				サンプルに惑わされるな！KnockoutでUIエフェクトを使う際のベター・プラクティス
+			</a> をご覧ください。
+		</p>
+	</blockquote>
 	<ul>
 		<li>
 			<p>

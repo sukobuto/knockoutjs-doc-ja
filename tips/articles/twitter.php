@@ -1,5 +1,5 @@
 <link href='resources/twitterExample.css' rel='Stylesheet' />
-<script src='resources/twitterApi.js' type='text/javascript'> </script>
+<script src='resources/twitterApi.js?v=1.0' type='text/javascript'> </script>
 <style type='text/css'>
 	.demo { padding: 0px !important; }
 	.demo select { height: 1.7em; }

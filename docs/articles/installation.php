@@ -24,7 +24,7 @@
 		</li>
 	</ol>
 	<p>例:</p>
-	<pre class="brush: html">&lt;script type="text/javascript" src="knockout-2.2.0.js"&gt;&lt;/script&gt;</pre>
+	<pre class="brush: html">&lt;script type="text/javascript" src="knockout-3.0.0.js"&gt;&lt;/script&gt;</pre>
 	
 	<p>
 		これで使用する準備が出来ました。上記の src属性は、Knockout を設置した場所に合わせて正しく指定して下さい。
@@ -42,13 +42,13 @@
 		<li>
 			<strong>Microsoft Ajax CDN</strong> (<a href="http://www.asp.net/ajaxlibrary/CDN.ashx">about</a>)
 			<ul>
-				<li><a href="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js">Knockout version 2.2.0</a></li>
+				<li><a href="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">Knockout version 2.2.1</a></li>
 			</ul>
 		</li>
 		<li>
 			<strong>CDNJS</strong> (<a href="http://cdnjs.com/">about</a>)
 			<ul>
-				<li><a href="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js">Knockout version 2.2.0</a></li>
+				<li><a href="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js">Knockout version 2.3.0</a></li>
 			</ul>
 		</li>
 	</ul>

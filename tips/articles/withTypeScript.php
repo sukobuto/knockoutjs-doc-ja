@@ -224,6 +224,9 @@ $(() =&gt; ko.applyBindings(new AppViewModel()));</pre>
 	<p>
 		TypeScript はまだ正式リリースされていないので、どうにか <code>this</code> を使える子にしてあげて欲しいです。
 	</p>
+	<p>
+		追記: TypeScript 0.9.5 にて確認したところ上記のように改善されていました！
+	</p>
 	
 	<div class="tail_mini_text">
 		この記事は、翻訳者が独自に作成したものです。

@@ -120,7 +120,7 @@
 		write: function(value) {
 			var lastSpacePos = value.lastIndexOf(" ");
 			if (lastSpacePos &gt; 0) { // スペースを含まない値は無視する
-				this.firstname(value.substring(0, lastSpacePos)); // "firstName" を更新
+				this.firstName(value.substring(0, lastSpacePos)); // "firstName" を更新
 				this.lastName(value.substring(lastSpacePos + 1)); // "lastName" を更新
 			}
 		},

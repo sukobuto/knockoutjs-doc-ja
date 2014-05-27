@@ -73,7 +73,7 @@
 
 	this.addItem = function() {
 		if ((this.itemToAdd() != &quot;&quot;) &amp;&amp; (this.allItems.indexOf(this.itemToAdd()) &lt; 0))
-			this.items.push(this.itemToAdd());
+			this.allItems.push(this.itemToAdd());
 		this.itemToAdd(&quot;&quot;);
 	};
 

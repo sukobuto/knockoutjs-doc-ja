@@ -11,6 +11,7 @@
 <!-- [if !(IE 7)]>--> <link rel="stylesheet" href="/css/font-awesome.css"> <!--<![endif]-->
 <link rel="stylesheet" href="/css/jquery.powertip.css">
 <link type="text/css" rel="stylesheet" href="/css/shtheme.css">
+<link rel="stylesheet" href="/css/highlight.css"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.1/sammy.min.js"></script>
@@ -27,6 +28,9 @@
 <script type="text/javascript" src="/js/shCore.js"></script> 
 <script type="text/javascript" src="/js/shBrushJScript.js"></script> 
 <script type="text/javascript" src="/js/shBrushXml.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 <script type="text/javascript"><!--
     $(function() {        

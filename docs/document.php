@@ -12,9 +12,12 @@
 
 require_once '../lib/config.php';
 require_once LIB_DIR . '/Util.php';
+require_once LIB_DIR . '/Michelf/MarkdownExtra.inc.php';
 
 $identifier = Util::g('identifier');
-if (!$identifier || !file_exists("articles/${identifier}.php")) Util::transfar('/');
+$php_src = "articles/{$identifier}.php";
+$md_src = "articles/{$identifier}.md";
+if (!(file_exists($md_src) or file_exists($php_src))) Util::transfar('/');
 
 ob_start();
 //////////////////////////////////////
@@ -30,7 +33,15 @@ ob_start();
 <div id="page_wrap">
 	<?php include 'common/header.php'?>
 	<div id="content_wrap" class="docs">
-		<?php include "articles/${identifier}.php"?>
+		<?php
+		if (file_exists($md_src)) {
+			echo '<article>';
+			echo \Michelf\MarkdownExtra::defaultTransform(file_get_contents($md_src));
+			echo '</article>';
+		} else if (file_exists($php_src)) {
+			include $php_src;
+		}
+		?>
 		<?php include 'common/sidemenu.php'?>
 	</div><!-- #content_wrap -->
 	<?php include '../common/footer.php'?>
@@ -47,4 +58,3 @@ ob_end_flush();
 if (file_put_contents($identifier.'.html', $page) > 0) {
 	Util::log(LOG_INFO, __FILE__, $identifier.'.html has created.');
 }
-?>

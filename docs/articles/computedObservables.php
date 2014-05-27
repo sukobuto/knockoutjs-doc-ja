@@ -196,7 +196,7 @@ ko.applyBindings(new MyViewModel());</pre>
 		バリデーションを実現するより簡単な方法がありますが (後述)、まずは次の ViewModel でメカニズムを説明致します。
 	</p>
 	<pre class="brush: js;">function MyViewModel() {
-	this.acceptedNumericValue = ko.obesrvable(123);
+	this.acceptedNumericValue = ko.observable(123);
 	this.lastInputWasValid = ko.observable(true);
 	
 	this.attemptedValue = ko.computed({

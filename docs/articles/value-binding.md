@@ -21,12 +21,10 @@
 ```
 
 ```javascript
-<script type="text/javascript">
-    var viewModel = {
-        userName: ko.observable(""),        // 最初は空欄
-        userPassword: ko.observable("abc"), // 事前に挿入
-    };
-</script>
+var viewModel = {
+	userName: ko.observable(""),        // 最初は空欄
+	userPassword: ko.observable("abc"), // 事前に挿入
+};
 ```
 
 ### パラメタ {#parameters}

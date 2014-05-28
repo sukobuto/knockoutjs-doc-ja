@@ -1,5 +1,3 @@
-<blockquote><i class="icon-exclamation-sign"></i> 申し訳ございません。この項目は翻訳が完了しておりません。いましばらくお待ち下さい。</blockquote>
-	
 # "submit" バインディング
 
 ### 用途 {#purpose}
@@ -131,6 +129,11 @@ ko.applyBindings(new SearchBoxViewModel());
 - 追加パラメタ
 
 	なし
+	
+### 備考 {#notes}
+
+`submit` にバインドした関数に追加の引数を渡す方法や、ViewModel に属さない関数が呼び出された際の `this` を制御する方法については
+[`click` バインディング](click-binding) を参照してください。`click` バインディングの（注）はすべて `submit` バインディングにも適用できます。
 
 ### 依存 {#dependencies}
 

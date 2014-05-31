@@ -12,7 +12,7 @@
 
 require_once '../lib/config.php';
 require_once LIB_DIR . '/Util.php';
-require_once LIB_DIR . '/Michelf/Markdown.inc.php';
+require_once LIB_DIR . '/Michelf/MarkdownExtra.inc.php';
 
 $identifier = Util::g('identifier');
 $php_src = "articles/{$identifier}.php";
@@ -58,4 +58,3 @@ ob_end_flush();
 if (file_put_contents($identifier.'.html', $page) > 0) {
 	Util::log(LOG_INFO, __FILE__, $identifier.'.html has created.');
 }
-?>

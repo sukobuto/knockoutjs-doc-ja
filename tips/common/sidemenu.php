@@ -17,7 +17,8 @@ $menues = array(
 	'twitter' => 'Twitter クライアント;テンプレート, 宣言型バインディング,<br>Ajax を組み合わせる',
 	
 	'<h2>;3' => 'Tips (翻訳者オリジナル他)',
-	'withTypeScript' => 'TypeScript で Knockout を<br>使ってみる'
+	'withTypeScript' => 'TypeScript で Knockout を<br>使ってみる',
+	'knockout-es5' => 'Knockout ES5 で<br>より自然な書き方へ',
 	/*
 	'viewSideAnimation' => 'View 側でアニメーション効果を実装',
 	'' => '',

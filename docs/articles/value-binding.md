@@ -178,4 +178,3 @@ var viewModel = {
 
 Knockout コアライブラリ以外、なし。
 
-<div class="tail_mini_text">原文は<a href="http://knockoutjs.com/documentation/<?php echo $identifier?>.html">こちら</a></div>

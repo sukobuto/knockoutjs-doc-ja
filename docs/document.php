@@ -37,6 +37,7 @@ ob_start();
 		if (file_exists($md_src)) {
 			echo '<article>';
 			echo \Michelf\MarkdownExtra::defaultTransform(file_get_contents($md_src));
+			echo '<div class="tail_mini_text">原文は<a href="http://knockoutjs.com/documentation/'.$identifier.'.html">こちら</a></div>';
 			echo '</article>';
 		} else if (file_exists($php_src)) {
 			include $php_src;

@@ -42,14 +42,16 @@ $menues = array(
 	'<h2>;4' => 'カスタムバインディングの作成',
 	'd;custom-bindings' => 'カスタムバインディングを作成',
 	'd;custom-bindings-controlling-descendant-bindings' => '配下のバインディングを制御する',
-	'd;custom-bindings-for-virtual-elements' => 'バーチャル要素にバインド<br>できるようにする',
+	'd;custom-bindings-for-virtual-elements' => '仮想エレメントにバインド<br>できるようにする',
+	'd;custom-bindings-disposal' => '破棄処理をカスタマイズ',
 	
 	'<h2>;5' => 'さらなるテクニック',
-	'd;json-data' => 'JSON で保存と読み込み',
+	'd;json-data' => 'JSON データの保存と読み込み',
 	'd;extenders' => 'Observable を拡張する',
-	'd;throttle-extender' => 'Observable スロットル拡張',
+	'd;rateLimit-observable' => '変更通知を遅延させる',
 	'd;unobtrusive-event-handling' => '"めだたない"イベントハンドラ',
 	'd;fn' => '"fn"で Observable に<br>機能を追加',
+	'd;binding-preprocessing' => 'プリプロセスで Knockout の<br>バインディング記法を拡張',
 		
 	'<h2>;6' => 'プラグイン',
 	'd;plugins-mapping' => 'データ連携プラグイン<br>「Mapping」',
@@ -57,7 +59,7 @@ $menues = array(
 	'<h2>;7' => '詳細情報',
 	'd;browser-suppport' => 'ブラウザサポート',
 	'<a>;http://groups.google.com/group/knockoutjs' => 'メーリングリスト',
-	'd;links' => 'リンクおよびチュートリアル',
+	'links' => 'リンクおよびチュートリアル',
 	'd;amd-loading' => 'RequireJsを用いたAMD<br>(非同期モジュール定義)',
 );
 

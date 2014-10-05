@@ -19,24 +19,24 @@
 
   * より多くを制御するには、以下のプロパティのいくつかを組み合わせたJavaScriptオブジェクトを渡します。
 
-    * **name** - 描画対象のテンプレートに含まれる、要素のIDです。プログラムによって動的にこの値を変更する方法は、[Note 5](#Note5)を参照してください。
+    * **name** - 描画対象のテンプレートに含まれる、要素のIDです。プログラムによって動的にこの値を変更する方法は、[注 5](#note-5-dynamically-choosing-which-template-is-used)を参照してください。
 
     * **data** - テンプレートを描画するためのデータを供給するオブジェクトです。このパラメータが省略された場合、KOは**foreach**パラメータを参照するか、または現在のモデルオブジェクトを使用してフォールバックします。
 
     * **if** - このパラメータが使用されると、指定した式がtrue（またはtrueのような値）と評価された場合のみ、テンプレートが描画されます。これは、テンプレートを設定する前にバインドされた時のnull Observableを防ぐために有用です。
 
-    * **foreach** - KOがテンプレートを"foreach"モードで描画するよう指示します - 詳しくは[Note 2](#Note2)を参照してください。
+    * **foreach** - KOがテンプレートを"foreach"モードで描画するよう指示します - 詳しくは[注 2](#note-2-using-the-foreach-option-with-a-named-template)を参照してください。
 
-    * **as** - foreachと組み合わせて使用された場合、描画される各アイテムに対してエイリアスを定義します - 詳しくは[Note 3](#Note3)を参照してください。
+    * **as** - foreachと組み合わせて使用された場合、描画される各アイテムに対してエイリアスを定義します - 詳しくは[注 3](#note-3-using-as-to-give-an-alias-to-foreach-items)を参照してください。
 
-    * **afterRender**, **afterAdd**, または**beforeRemove** - 描画されたDOM要素に対して呼び出されるコールバック関数です - [Note 4](#Note4)を参照してください。
+    * **afterRender**, **afterAdd**, または**beforeRemove** - 描画されたDOM要素に対して呼び出されるコールバック関数です - [注 4](#note-4-using-afterrender-afteradd-and-beforeremove)を参照してください。
 
 
-### <a name="Note1"></a> Note 1: 名前付きテンプレートの描画
+### (注1) 名前付きテンプレートの描画 {#note-1-rendering-a-named-template}
 
 通常、フロー制御のバインディング（**foreach**, **with**, **if**, 等々）を使用する際、テンプレートに名前を設定する必要はありません。それらはDOM要素内のマークアップに基づいて暗黙的、匿名的に定義されます。しかし、もし必要であれば、テンプレートを個別の要素に分割し、それらを名前によって参照することができます。
 
-```javascript
+```html
 <h2>Participants</h2>
 Here are the participants:
 <div data-bind="template: { name: 'person-template', data: buyer }"></div>
@@ -61,11 +61,11 @@ Here are the participants:
 名前付きテンプレートの使用が必要になることはそれほど頻繁にはありませんが、必要性が生じた場合には、マークアップの重複を最小限に抑えることができます。
 
 
-### <a name="Note2"></a> Note 2: "foreach" オプションを名前付きテンプレートで使用する
+### (注2) "foreach" オプションを名前付きテンプレートで使用する {#note-2-using-the-foreach-option-with-a-named-template}
 
 もし、**foreach**バインディングと同じ事のために名前付きテンプレートを使用したい場合でも、それを自然な方法で行うことができます。
 
-```javascript
+```html
 <h2>Participants</h2>
 Here are the participants:
 <div data-bind="template: { name: 'person-template', foreach: people }"></div>
@@ -86,7 +86,7 @@ Here are the participants:
 
 これは**foreach**を使用したエレメントの内部に匿名テンプレートを直接埋め込んだ場合と同等の結果をもたらします。すなわち:
 
-```javascript
+```html
 <div data-bind="foreach: people">
     <h3 data-bind="text: name"></h3>
     <p>Credits: <span data-bind="text: credits"></span></p>
@@ -94,13 +94,13 @@ Here are the participants:
 ```
 
 
-### <a name="Note3"></a> Note 3: “foreach” のアイテムにエイリアスを与える“as” の使用
+### (注3) “foreach” のアイテムにエイリアスを与える“as” の使用 {#note-3-using-as-to-give-an-alias-to-foreach-items}
 
 **foreach**のテンプレートをネストした場合、階層の上位レベルに存在するアイテムを参照できると何かと便利です。これを行う1つの方法は、バインディング内で**$parent**または他の[バインディングコンテキスト](./binding-context)変数を参照することです。
 
 しかしながら、よりシンプルでエレガントな方法は、反復内の変数として名前を定義し、使用することです。例えば:
 
-```javascript
+```html
 <ul data-bind="template: { name: 'employeeTemplate',
                                   foreach: employees,
                                   as: 'employee' }"></ul>
@@ -110,7 +110,7 @@ Here are the participants:
 
 これは主に複数階層のネストされた**foreach**ブロックを使用している場合に有用です。階層内の上位のレベルで定義されたどのような名前のアイテムでも参照を可能にする、明確な方法を提供するからです。以下は、**month**を描画する際、どのように**season**を参照できるかを示す、完全な例です。
 
-```javascript
+```html
 <ul data-bind="template: { name: 'seasonTemplate', foreach: seasons, as: 'season' }"></ul>
 
 <script type="text/html" id="seasonTemplate">
@@ -144,7 +144,7 @@ Here are the participants:
 Tip: 文字列のリテラル値を渡すことを忘れないでください（例えば、`as: season` ではなく `as: 'season'`）。なぜなら、すでに存在する変数の値を参照していない、新たな変数に名前を与えているからです。
 
 
-### <a name="Note4"></a> Note 4: “afterRender”, “afterAdd”, そして “beforeRemove” の使用
+### (注4) “afterRender”, “afterAdd”, そして “beforeRemove” の使用 {#note-4-using-afterrender-afteradd-and-beforeremove}
 
 時には、テンプレートから生成されたDOM要素に対し、カスタムのポストプロセッシング処理を実行したいことがあるかもしれません。
 例えばjQuery UIのようなJavaScriptウィジェットライブラリを使用している場合、テンプレートの出力を中断してjQuery UIコマンドを実行し、描画された要素の一部をDatePickerやSlider、または他の何かに変換したいことがあるでしょう。
@@ -154,7 +154,7 @@ Tip: 文字列のリテラル値を渡すことを忘れないでください（
 関数のリファレンスを渡すと(関数のリテラル、またはビューモデル上の関数名のどちらか)、Knockoutはテンプレートを描画または再描画した後、直ちにそれを呼び出します。
 もし**foreach**を使用している場合、Knockoutは**afterRender**コールバックを、各アイテムがObservable配列に追加された際に呼び出します。例えば:
 
-```javascript
+```html
 <div data-bind='template: { name: "personTemplate",
                             data: myData,
                             afterRender: myPostProcessingLogic }'> </div>
@@ -172,13 +172,13 @@ viewModel.myPostProcessingLogic = function(elements) {
 もし、あなたがforeachを使用していて、厳密に要素が追加された、あるいは削除された場合のみ通知が必要な場合は、代わりに**afterAdd**と**beforeRemove**を使用することができます。詳細については、[foreachバインディング](./foreach-binding)の説明を参照してください。
 
 
-### <a name="Note5"></a> Note 5: 使用するテンプレートの動的な指定
+### (注5) 使用するテンプレートの動的な指定 {#note-5-dynamically-choosing-which-template-is-used}
 
 複数の名前付きテンプレートが存在している場合、**name**オプションに対してObservableを渡すことができます。Observableの値が更新されると、要素の内容は適切なテンプレートを使用して再描画されます。他の方法として、使用するテンプレートを決定するためのコールバック関数を渡すこともできます。もし、**foreach**テンプレートモードを使用している場合、Knockoutはアイテムの値を1つ目の引数として渡し、配列内の各アイテムに対して関数を評価します。それ以外の場合、関数は**data**オプションの値か、または現在のモデルオブジェクト全体にフォールバックしたものを受け取ります。
 
 例えば、
 
-```javascript
+```html
 <ul data-bind='template: { name: displayMode,
                            foreach: employees }'> </ul>
 
@@ -211,7 +211,7 @@ displayMode: function(employee, bindingContext) {
 }
 ```
 
-### <a name="Note6"></a> Note 6: jQuery.tmpl の使用と外部の文字列ベーステンプレートエンジン
+### (注6) jQuery.tmpl の使用と外部の文字列ベーステンプレートエンジン {#note-6-using-jquerytmpl-an-external-string-based-template-engine}
 
 ほとんどの場合、Knockoutネイティブのテンプレート化と**foreach**, **if**, **with**や他のフロー制御バインディングは、任意の洗練されたUIを構築するために必要となる全てでしょう。しかし、[Underscoreテンプレートエンジン](http://documentcloud.github.io/underscore/#template)や[jQuery.tmpl](https://github.com/BorisMoore/jquery-tmpl)のような外部のテンプレートライブラリと統合したい場合には、Knockoutはそれを行うための方法を提供しています。
 
@@ -225,7 +225,7 @@ displayMode: function(employee, bindingContext) {
 
 そして、あなたのテンプレートでjQuery.tmpl構文を使用することができます。例えば、
 
-```javascript
+```html
 <h1>People</h1>
 <div data-bind="template: 'peopleList'"></div>
 
@@ -253,11 +253,11 @@ displayMode: function(employee, bindingContext) {
 ただし、2011年12月の時点で、jQuery.tmplがもはやアクティブに開発されていないことに注意して下さい。jQuery.tmplやその他の文字列ベースのテンプレートエンジンの替わりに、私たちは、KnockoutネイティブのDOMベーステンプレートを使用することをお勧めします（つまり、**foreach**, **if**, **with**, 等々のバインディング）。
 
 
-### <a name="Note7"></a> Note 7: Underscore.js テンプレートエンジンの使用
+### (注7) Underscore.js テンプレートエンジンの使用 {#note-7-using-the-underscorejs-template-engine}
 
 [Underscore.jsのテンプレートエンジン](http://documentcloud.github.io/underscore/#template)は、デフォルトではERBスタイルの区切り文字を使用しています（`<%=...%>`）。以下は、前述の例にあるテンプレートが、Underscoreの場合どのように見えるかです：
 
-```javascript
+```html
 <script type="text/html" id="peopleList">
     <% _.each(people(), function(person) { %>
         <li>

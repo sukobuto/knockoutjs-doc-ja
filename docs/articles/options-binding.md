@@ -6,11 +6,13 @@
 
 ### 用途 {#purpose}
 
-The options binding controls what options should appear in a drop-down list (i.e., a <select> element) or multi-select list (e.g., <select size='6'>). This binding cannot be used with anything other than <select> elements.
+`options` バインディングは `<select>` によるドロップダウンリスト、または `<select size='6'>` のような複数選択リストの選択肢を制御します。
+このバインディングは `<select>` エレメントのみで使用できます。
 
-The value you assign should be an array (or observable array). The <select> element will then display one item for each item in your array.
+紐付ける値は配列または ObservableArray です。`<select>` エレメントは配列の各アイテムから一つを表示します。
 
-Note: For a multi-select list, to set which of the options are selected, or to read which of the options are selected, use the selectedOptions binding. For a single-select list, you can also read and write the selected option using the value binding.
+※ 複数選択リストの場合、選択状態をセットまたは取得するのに [`selectedOptions` バインディング](selectedOptions-binding) を使います。
+択一のドロップダウンリストでは、他のフォーム部品同様に選択されたアイテムを [`value` バインディング](value-binding) で管理できます。
 
 ### Example 1: Drop-down list {#example-1-drop-down-list}
 

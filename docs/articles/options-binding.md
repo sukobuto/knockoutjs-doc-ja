@@ -14,58 +14,58 @@
 ※ 複数選択リストの場合、選択状態をセットまたは取得するのに [`selectedOptions` バインディング](selectedOptions-binding) を使います。
 択一のドロップダウンリストでは、他のフォーム部品同様に選択されたアイテムを [`value` バインディング](value-binding) で管理できます。
 
-### Example 1: Drop-down list {#example-1-drop-down-list}
+### 例1: ドロップダウンリスト {#example-1-drop-down-list}
 
 ```html
 <p>
-    Destination country:
+    行き先:
     <select data-bind="options: availableCountries"></select>
 </p>
  
 <script type="text/javascript">
     var viewModel = {
-        // These are the initial options
-        availableCountries: ko.observableArray(['France', 'Germany', 'Spain'])
+        // 選択肢の初期値を設定
+        availableCountries: ko.observableArray(['フランス', 'ドイツ', 'スペイン'])
     };
  
-    // ... then later ...
-    viewModel.availableCountries.push('China'); // Adds another option
+    // ... その後 ...
+    viewModel.availableCountries.push('中国'); // 選択肢を追加
 </script>
 ```
 
-### Example 2: Multi-select list {#example-2-multi-select-list}
+### 例2: 複数選択リスト {#example-2-multi-select-list}
 
 ```html
 <p>
-    Choose some countries you would like to visit:
+    言ってみたい国はどこですか:
     <select data-bind="options: availableCountries" size="5" multiple="true"></select>
 </p>
  
 <script type="text/javascript">
     var viewModel = {
-        availableCountries: ko.observableArray(['France', 'Germany', 'Spain'])
+        availableCountries: ko.observableArray(['フランス', 'ドイツ', 'スペイン'])
     };
 </script>
 ```
 
-### Example 3: Drop-down list representing arbitrary JavaScript objects, not just strings {#example-3-drop-down-list-representing-arbitrary-javascript-objects-not-just-strings}
 
+### 例3: 単なる文字列ではなく任意の JavaScript オブジェクトを表示 {#example-3-drop-down-list-representing-arbitrary-javascript-objects-not-just-strings}
 ```html
 <p>
-    Your country:
+    あなたの国:
     <select data-bind="options: availableCountries,
                        optionsText: 'countryName',
                        value: selectedCountry,
-                       optionsCaption: 'Choose...'"></select>
+                       optionsCaption: '-選択してください-'"></select>
 </p>
  
-<div data-bind="visible: selectedCountry"> <!-- Appears when you select something -->
-    You have chosen a country with population
-    <span data-bind="text: selectedCountry() ? selectedCountry().countryPopulation : 'unknown'"></span>.
+<div data-bind="visible: selectedCountry"> <!-- どれかを選択したときに表示される -->
+    選択した国およびその人口
+    <span data-bind="text: selectedCountry() ? selectedCountry().countryPopulation : '不明'"></span>.
 </div>
  
 <script type="text/javascript">
-    // Constructor for an object with two properties
+    // 2つのプロパティを持ったオブジェクトのコンストラクタ
     var Country = function(name, population) {
         this.countryName = name;
         this.countryPopulation = population;
@@ -73,28 +73,28 @@
  
     var viewModel = {
         availableCountries : ko.observableArray([
-            new Country("UK", 65000000),
-            new Country("USA", 320000000),
-            new Country("Sweden", 29000000)
+            new Country("イギリス", 65000000),
+            new Country("アメリカ", 320000000),
+            new Country("スウェーデン", 29000000)
         ]),
-        selectedCountry : ko.observable() // Nothing selected by default
+        selectedCountry : ko.observable() // デフォルトでは何も選択されていない状態
     };
 </script>
 ```
 
-### Example 4: Drop-down list representing arbitrary JavaScript objects, with displayed text computed as a function of the represented item {#example-4-drop-down-list-representing-arbitrary-javascript-objects-with-displayed-text-computed-as-a-function-of-the-represented-item}
+### 例4: 表示される選択肢のテキストとして、任意の JavaScript オブジェクトを処理した値を用いる  {#example-4-drop-down-list-representing-arbitrary-javascript-objects-with-displayed-text-computed-as-a-function-of-the-represented-item}
 
 ```html
-<!-- Same as example 3, except the <select> box expressed as follows: -->
+<!-- 下記の select 以外は例3と同じ: -->
 <select data-bind="options: availableCountries,
                    optionsText: function(item) {
                        return item.countryName + ' (pop: ' + item.countryPopulation + ')'
                    },
                    value: selectedCountry,
-                   optionsCaption: 'Choose...'"></select>
+                   optionsCaption: '-選択してください-'"></select>
 ```
 
-Note that the only difference between examples 3 and 4 is the `optionsText` value.
+例3と例4の違いは `optionsText` に指定した値のみです。
 
 # Parameters {#parameters}
 

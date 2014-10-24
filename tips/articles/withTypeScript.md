@@ -83,7 +83,7 @@ ko.applyBindings(new GiftSetViewModel([
 </form>
 ```
 
-### TypeScript で Knockout を使う際の問題点と対処法
+### TypeScript で Knockout を使う際の問題点と対処法 {#problems_and_solutions}
 
 `GiftSetViewModel` の `constructor` で、なにやら謎の処理が行われていますね。
 

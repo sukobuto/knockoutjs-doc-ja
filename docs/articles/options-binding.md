@@ -96,7 +96,7 @@
 
 例3と例4の違いは `optionsText` に指定した値のみです。
 
-# Parameters {#parameters}
+# パラメタ {#parameters}
 
 - 主パラメタ
 	
@@ -106,19 +106,25 @@
 	
 	このパラメタが Observable である場合、このバインディングは値が変更される度に選択肢をを更新します。Observable でない場合は、選択肢は一度だけ設定され、以降は更新されません。
     
-- Additional parameters
+- 追加パラメタ
 
 	- `optionsCaption`
-	
-		Sometimes, you might not want to select any particular option by default. But a single-select drop-down list usually starts with some item selected, so how can you avoid preselecting something? The usual solution is to prefix the list of options with a special dummy option that just reads “Select an item” or “Please choose an option” or similar, and have that one selected by default.
+		
+		時にはデフォルトでどの選択肢も選択されていない状態にしたいことがあります。しかし択一のドロップダウンリストでは通常、初期状態でいずれかが選択されてしまいます。どうしたら何も選択されないようにできるでしょう？よくある解決策として、選択肢リストに「選択してください」のようなダミーの選択肢を用意し、デフォルトでそれが選択されるようにします。
+		
+		これは `optionsCaption` という追加パラメタで次のように未選択状態のテキストを設定することで簡単に実現できます。
         
-        This easy to do: just add an additional parameter with name `optionsCaption`, with its value being a string to display. For example:
+        `<select data-bind='options: myOptions, optionsCaption: "選択してください", value: myChosenValue'></select>`
         
-        `<select data-bind='options: myOptions, optionsCaption: "Select an item...", value: myChosenValue'></select>`
-        
-        KO will prefix the list of items with one that displays the text “Select an item…” and has the value `undefined`. So, if `myChosenValue` holds the value `undefined` (which observables do by default), then the dummy option will be selected. If the `optionsCaption` parameter is an observable, then the text of the initial item will update as the observable’s value changes.
+        Knockout はリストの先頭に「選択してください」というテキストアイテムを、value を `undefined` として追加します。したがって `myChosenValue` の値が `undefined` であれば、そのダミーの選択肢が選択されます。`optionsCaption` に Observable を指定した場合、値の変更に従い初期アイテムのテキストも更新されます。
         
 	- `optionsText`
+		
+		See Example 3 above to see how you can bind `options` to an array of arbitrary JavaScript object - not just strings. In this case, you need to choose which of the objects’ properties should be displayed as the text in the drop-down list or multi-select list. Example 3 shows how you can specify that property name by passing an additional parameter called `optionsText`.
+        
+        If you don’t want to display just a simple property value as the text for each item in the dropdown, you can pass a JavaScript function for the `optionsText` option and supply your own arbitrary logic for computing the displayed text in terms of the represented object. See Example 4 above, which shows how you could generate the displayed text by concatenating together multiple property values.
+        
+	- `optionsValue`
 		
 		Similar to `optionsText`, you can also pass an additional parameter called `optionsValue` to specify which of the objects’ properties should be used to set the `value` attribute on the `<option>` elements that KO generates. You can also specify a JavaScript function to determine this value. This function will receive the selected item as its only argument and should return a string to use for the <option> element’s value attribute.
         

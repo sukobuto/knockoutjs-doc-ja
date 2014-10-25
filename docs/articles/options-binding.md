@@ -98,13 +98,13 @@
 
 # Parameters {#parameters}
 
-- Main parameter
-
-	You should supply an array (or observable array). For each item, KO will add an <option> to the associated <select> node. Any previous options will be removed.
-    
-    If your parameter’s value is an array of strings, you don’t need to give any other parameters. The <select> element will display an option for each string value. However, if you want to let the user choose from an array of arbitrary JavaScript objects (not merely strings), then see the optionsText and optionsValue parameters below.
-    
-    If this parameter is an observable value, the binding will update the element’s available options whenever the value changes. If the parameter isn’t observable, it will only set the element’s available options once and will not update them again later.
+- 主パラメタ
+	
+	配列または ObservableArray を指定します。Knockout は紐付けられた `<select>` ノードに各アイテムごとに `<option>` エレメントを追加します。既存の選択肢は削除されます。
+	
+	文字列の配列を指定した場合、他に必要なパラメタはありません。`<select>` エレメントにそれぞれの文字列が選択肢として表示されます。ただし、単なる文字列ではなく任意の JavaScript オブジェクトをユーザーに選択してほしい場合は、`optionsText` と `optionsValue` パラメタを確認して下さい。
+	
+	このパラメタが Observable である場合、このバインディングは値が変更される度に選択肢をを更新します。Observable でない場合は、選択肢は一度だけ設定され、以降は更新されません。
     
 - Additional parameters
 

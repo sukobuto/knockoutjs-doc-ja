@@ -120,9 +120,9 @@
         
 	- `optionsText`
 		
-		See Example 3 above to see how you can bind `options` to an array of arbitrary JavaScript object - not just strings. In this case, you need to choose which of the objects’ properties should be displayed as the text in the drop-down list or multi-select list. Example 3 shows how you can specify that property name by passing an additional parameter called `optionsText`.
-        
-        If you don’t want to display just a simple property value as the text for each item in the dropdown, you can pass a JavaScript function for the `optionsText` option and supply your own arbitrary logic for computing the displayed text in terms of the represented object. See Example 4 above, which shows how you could generate the displayed text by concatenating together multiple property values.
+		上記の例3では `options` で単なる文字列ではなく任意の JavaScript オブジェクトの配列をバインドする方法を示しました。この場合、オブジェクトのどのおプロパティを選択肢のテキストとして表示すべきかを選ぶ必要があります。例3で `optionsText` パラメタを使って指定しました。
+		
+		各アイテムのプロパティの値をそのまま表示したくない場合、`optionsText` に表示されるテキストを処理するための任意の JavaScript 関数を設定することができます。上記の例4にて、複数のプロパティの値を結合して表示する方法を示しました。
         
 	- `optionsValue`
 		

@@ -126,9 +126,9 @@
         
 	- `optionsValue`
 		
-		Similar to `optionsText`, you can also pass an additional parameter called `optionsValue` to specify which of the objects’ properties should be used to set the `value` attribute on the `<option>` elements that KO generates. You can also specify a JavaScript function to determine this value. This function will receive the selected item as its only argument and should return a string to use for the <option> element’s value attribute.
-        
-        Typically you’d only want to use `optionsValue` as a way of ensuring that KO can correctly retain selection when you update the set of available options. For example, if you’re repeatedly getting a list of “car” objects via Ajax calls and want to ensure that the selected car is preserved, you might need to set `optionsValue` to `"carId"` or whatever unique identifier each “car” object has, otherwise KO won’t necessarily know which of the previous “car” objects corresponds to which of the new ones.
+		`optionsText` と同様に、`optionsValue` パラメタによって Knockout が `<option>` エレメントを生成する際にオブジェクトのどのプロパティを `value` として設定すべきかを指定することができます。またこの値を決定するための関数を指定することもできます。この関数は選択されたアイテムを引数として受け取り、`<option>` エレメントの value 属性として使う文字列を返すようにします。
+		
+		一般的に `optionsValue` は、利用可能な選択肢を更新する際に Knockout が正しく選択を保持することを保証するための方法として使います。例えば選択肢として “car” オブジェクトのリストが Ajax によって何度も取得され、かつ選択した自動車が記憶されるようにしたいとします。`optionsValue` に `"carId"` など、“car” オブジェクトを一意に特定するプロパティを指定しないと、リストが更新されたときに、前に選択されていたものに相当するオブジェクトがどれか Knockout が知ることができなくなります。
 	
 	- `optionsIncludeDestroyed`
 		

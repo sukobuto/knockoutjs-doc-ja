@@ -37,7 +37,7 @@ $menues = array(
 	'<h3>;3-4' => 'レンダリング・テンプレート',
 	'template-binding' => 'template',
 	'<h3>;3-5' => 'バインディングの構文',
-	'd;binding-syntax' => 'data-bind の書き方について',
+	'binding-syntax' => 'data-bind の書き方について',
 	'binding-context' => 'バインディング・コンテキスト',
 	'<h2>;4' => 'カスタムバインディングの作成',
 	'd;custom-bindings' => 'カスタムバインディングを作成',
@@ -57,10 +57,10 @@ $menues = array(
 	'd;plugins-mapping' => 'データ連携プラグイン<br>「Mapping」',
 	
 	'<h2>;7' => '詳細情報',
-	'd;browser-suppport' => 'ブラウザサポート',
+	'browser-support' => 'ブラウザサポート',
 	'<a>;http://groups.google.com/group/knockoutjs' => 'メーリングリスト',
 	'links' => 'リンクおよびチュートリアル',
-	'd;amd-loading' => 'RequireJsを用いたAMD<br>(非同期モジュール定義)',
+	'amd-loading' => 'RequireJsを用いたAMD<br>(非同期モジュール定義)',
 );
 
 echo '<aside>';

@@ -1,14 +1,14 @@
 # 配下のバインディングを制御する
 
-注: これは高度な技術であり、通常では再利用可能なバインディングのライブラリを作成する場合にのみ使用されます。普通、Knockoutでアプリケーションを構築する際には必要になりません。
+注: これは高度な技術であり、通常では再利用可能なバインディングのライブラリを作成する場合にのみ使用されます。普通、Knockout でアプリケーションを構築する際には必要になりません。
 
 デフォルトでは、バインディングはそれが適用されたDOM要素のみに影響します。しかし、もし全ての配下の要素にも影響を与えたい場合、どうしたらよいでしょうか？これは可能です。あなたのバインディングは、配下には全くバインドしないようKnockoutに伝えることもできますし、別の方法によって、何であれ好きな対象にバインドできます。
 
-これを行うには、単にあなたのバインディングの**init**関数から、**return { controlsDescendantBindings: true }** を返します。
+これを行うには、単にあなたのバインディングの `init` 関数から、`return { controlsDescendantBindings: true }` を返します。
 
 ## 例: 配下のバインディングが適用されるかどうかを制御する
 
-非常に簡単な例として、こちらは**allowBindings**という名前のカスタムバインディングで、値が**true**である場合のみ、配下のバインディングの適用を許可します。値が**false**の場合、**allowBindings**は、Knockoutに対して配下のバインディングの責任を持ち、対象の要素が普段のようにバインディングされない事を伝えます。
+非常に簡単な例として、こちらは `allowBindings` という名前のカスタムバインディングで、値が `true` である場合のみ、配下のバインディングの適用を許可します。値が `false` の場合、`allowBindings` は、Knockout に対して配下のバインディングの責任を持ち、対象の要素が普段のようにバインディングされない事を伝えます。
 
 ```javascript
 ko.bindingHandlers.allowBindings = {
@@ -34,9 +34,9 @@ ko.bindingHandlers.allowBindings = {
 </div>
 ```
 
-## 例: 配下のバインディングに対する追加の値の供給
+### 例: 配下のバインディングに対する追加の値の供給 {#example-controlling-whether-or-not-descendant-bindings-are-applied}
 
-通常、**controlsDescendantBindings**を使用するバインディングでは、なんらかの修飾された[バインディングコンテキスト](./binding-context)に対しても配下のバインディングを適用するため、**ko.applyBindingsToDescendants(someBindingContext, element)**を呼び出します。例えば、あなたはバインディングコンテキストにいくつか追加のプロパティを付与する**withProperties**という名前のバインディングを作成可能で、付与したプロパティは全ての配下のバインディングで使用できるようになります。
+通常、`controlsDescendantBindings` を使用するバインディングでは、なんらかの修飾された[バインディングコンテキスト](binding-context)に対しても配下のバインディングを適用するため、`ko.applyBindingsToDescendants(someBindingContext, element)` を呼び出します。例えばバインディングコンテキストにいくつか追加のプロパティを付与する `withProperties` という名前のバインディングを作れば、付与したプロパティは全ての配下のバインディングで使用できるようになります。
 
 ```javascript
 ko.bindingHandlers.withProperties = {
@@ -51,7 +51,7 @@ ko.bindingHandlers.withProperties = {
 };
 ```
 
-ご覧のとおり、バインディングコンテキストは追加のプロパティと共にクローンを生成する、**extend**関数を持ちます。**extend**関数は、コピーするプロパティを持つオブジェクト、またはそのようなオブジェクトを返す関数のいずれかを受け入れます。この関数の構文としては、バインディング値の将来的な変更が常にバインディングコンテキスト内で更新されることが望ましいです。このプロセスは元のバインディングコンテキストには影響しないので、兄弟レベルの要素に影響を与える恐れがありません - それは配下にのみ影響します。
+ご覧のとおり、バインディングコンテキストは追加のプロパティと共にクローンを生成する、`extend` 関数を持ちます。`extend` 関数は、コピーするプロパティを持つオブジェクト、またはそのようなオブジェクトを返す関数のいずれかを受け入れます。この関数の構文としては、バインディング値の将来的な変更が常にバインディングコンテキスト内で更新されることが望ましいです。このプロセスは元のバインディングコンテキストには影響しないので、兄弟レベルの要素に影響を与える恐れがありません - それは配下にのみ影響します。
 
 こちらが上記のカスタムバインディングの使用例です。
 
@@ -64,11 +64,11 @@ ko.bindingHandlers.withProperties = {
 </div>
 ```
 
-## 例: バインディングコンテキストの階層にレベルを追加する
+### 例: バインディングコンテキストの階層にレベルを追加する {#example-supplying-additional-values-to-descendant-bindings}
 
-[with](./with-binding)や[foreach](./foreach-binding)バインディングと同様に、バインディングコンテキストの階層に追加のレベルを作成します。これはその配下の要素が**$parent**、**$parents**、**$root**、または**$parentContext**の使用によって外側のレベルにあるデータにアクセスできることを意味します。
+[with](with-binding)や[foreach](foreach-binding)バインディングと同様に、バインディングコンテキストの階層に追加のレベルを作成します。これはその配下の要素が `$parent`、`$parents`、`$root`、または `$parentContext` の使用によって外側のレベルにあるデータにアクセスできることを意味します。
 
-もし、あなたがこれをカスタムバインディングで行いたい場合、**bindingContext.extend()**の代わりに、**bindingContext.createChildContext(someData)**を使用してください。この関数は、ビューモデルが**someData**であり、**$parentContext**が**bindingContext**である新しいバインディングコンテキストを返します。もし望むのであれば、その後に**ko.utils.extend**を使用して、追加のプロパティを持つ子コンテキストを拡張することもできます。例えば、
+もし、あなたがこれをカスタムバインディングで行いたい場合、`bindingContext.extend()` の代わりに、`bindingContext.createChildContext(someData)` を使用してください。この関数は、ビューモデルが `someData` であり、`$parentContext` が `bindingContext` である新しいバインディングコンテキストを返します。もし望むのであれば、その後に `ko.utils.extend` を使用して、追加のプロパティを持つ子コンテキストを拡張することもできます。例えば、
 
 ```javascript
 ko.bindingHandlers.withProperties = {
@@ -88,7 +88,7 @@ ko.bindingHandlers.withProperties = {
 };
 ```
 
-この更新された**withProperties**バインディングはネストされた対象に使用することができ、ネストされた各レベルは親のレベルに**$parentContext**経由でアクセスできます:
+この更新された `withProperties` バインディングはネストされた対象に使用することができ、ネストされた各レベルは親のレベルに `$parentContext` 経由でアクセスできます:
 
 ```html
 <div data-bind="withProperties: { displayMode: 'twoColumn' }">

@@ -1,5 +1,6 @@
 knockoutjs-doc-ja
 =================
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/sukobuto/knockoutjs-doc-ja?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # KnockoutJS の非公式日本語ドキュメントです。
 

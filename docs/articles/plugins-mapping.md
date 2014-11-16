@@ -1,15 +1,15 @@
 # Mapping プラグイン
 
-Knockout は、任意の JavaScript オブジェクトをビューモデルとして使用できるように設計されています。ビューモデルのプロパティのうちいくつかが [observable](observables) であれば Knockout をそれらのプロパティと UI をバインドでき、 observable なプロパティが変更されるたびに、 UI は自動的に更新されます。
+Knockout は、任意の JavaScript オブジェクトをビューモデルとして使用できるように設計されています。ビューモデルのプロパティのうちいくつかが [observable](observables) であれば、 Knockout はそれらのプロパティと UI をバインドすることができ、 observable なプロパティが変更されるたびに UI は自動的に更新されます。
 
 ほとんどのアプリケーションは、バックエンドサーバからデータを取得する必要があります。サーバは observable についていかなる概念も持っていないので、生の JavaScript オブジェクト（通常は JSON としてシリアライズされます）を供給するのみです。mapping プラグインは、生の JavaScript オブジェクトを、適切な observable を持つビューモデルにマッピングする簡単な方法を提供します。これは、サーバから取得したなんらかのデータに基づいたビューモデルを構成するために、手動で独自の JavaScript コードを書く方法の代替手段です。
 
 
-### ダウンロード{#download}
+### ダウンロード {#download-1}
 
 [Version 2.0](https://github.com/SteveSanderson/knockout.mapping/tree/master/build/output) (8.6kb minified)
 
-### 例: ko.mapping プラグイン無しでの手動マッピング{#example-manual-mapping-without-the-ko-mapping-plugin}
+### 例: ko.mapping プラグイン無しでの手動マッピング {#example-manual-mapping-without-the-ko-mapping-plugin}
 
 たとえば現在のサーバー時刻とウェブページ上のユーザー数を表示したいとします。以下のビューモデルを使用してこの情報を表すことができます：
 
@@ -54,7 +54,7 @@ viewModel.numUsers(data.numUsers);
 
 ページに表示するすべての変数に対して、これを行うことになります。子要素や配列が含まれたりデータ構造がより複雑になれば、手動で処理するのが非常に煩雑になります。そこで mapping プラグインによって、通常の JavaScript オブジェクト（または JSON 構造）から observable なビューモデルへのマッピングを作成することが可能になります。
 
-### 例: ko.mapping の使用{#using-ko-mapping}
+### 例: ko.mapping の使用 {#using-ko-mapping}
 
 mapping プラグインによってビューモデルを作成するには、上記のコードについて `viewModel` の作成を `ko.mapping.fromJS` 関数で置き換えます。
 
@@ -69,12 +69,12 @@ var viewModel = ko.mapping.fromJS(data);
 ko.mapping.fromJS(data, viewModel);
 ```
 
-### どのようにマッピングされるのか{#how-things-are-mapped}
+### どのようにマッピングされるのか {#how-things-are-mapped}
 
 * オブジェクトの全てのプロパティは observable に変換されます。更新によって値が変更されると、それは observable な形で更新されます。
 * 配列は [observable array](observableArrays) に変換されます。更新によって配列のいくつかの値が変更されると、適切な add / remove アクションが実行されます。また、元の JavaScript 配列と同じように並び順を維持しようと試みます。
 
-### マッピングの解除{#unmapping}
+### マッピングの解除 {#unmapping}
 
 もしすでにマッピングされたオブジェクトを、元の、通常の JS オブジェクトに変換したい場合は、以下の関数を使用します。
 
@@ -84,19 +84,19 @@ var unmapped = ko.mapping.toJS(viewModel);
 
 この関数は、マッピング済みオブジェクトのプロパティのうち、元の JavaScript オブジェクトの一部であったもののみを含む、マッピングが解除されたオブジェクトを作成します。言い換えると、手動でビューモデルに追加されたプロパティまたは関数は無視されます。デフォルトでは、このルールの唯一の例外は `_destroy` プロパティが追加されることです。`_destroy` は `ko.observableArray` から項目を破棄する際に Knockout が生成するプロパティです。これを設定する方法の詳細については、["高度な使い方"](#advanced-usage) を参照してください。
 
-### JSON 文字列での動作{#working-with-json-strings}
+### JSON 文字列での動作 {#working-with-json-strings}
 
 Ajax の結果が JSON 形式である（そしてそれを JavaScript オブジェクトにデシリアライズしない）場合は、ビューモデルを作成および更新するため、代わりに `ko.mapping.fromJSON` 関数を使用することができます。解除には、 `ko.mapping.toJSON` を使用することができます。
 
 JavaScript オブジェクトの代わりに JSON 文字列を使用することを除けば、これらの関数は `*JS` の対応する関数と完全に同一です。
 
-### 高度な使い方{#advanced-usage}
+### 高度な使い方 {#advanced-usage}
 
 場合によっては、マッピングが実行される方法をより詳細に制御する必要があるかもしれません。この目的はマッピングオプションを使用することで達成可能です。これらのオプションは `ko.mapping.fromJS` を呼び出す際に指定することができます。それ以降の呼び出しでは、それらを再度指定する必要はありません。
 
 ここではマッピングオプションを使用したいと感じる状況について、いくつかの例を挙げます。
 
-#### "key"を使用して、一意にオブジェクトを識別する{#uniquely-identifying-objects-using-keys}
+#### "key"を使用して、一意にオブジェクトを識別する {#uniquely-identifying-objects-using-keys}
 
 例えば、以下のような JavaScript オブジェクトを扱っているとしましょう：
 
@@ -151,7 +151,7 @@ var viewModel = ko.mapping.fromJS(data, mapping);
 
 これによって、mapping プラグインは `children` 配列内の項目をチェックするたび、オブジェクト全体を置き換えるか、それとも単に更新が必要なのかを判断するために `id` プロパティのみを参照します。
 
-#### "create"を使用して、オブジェクト構築をカスタマイズする{#customizing-object-construction-using-create}
+#### "create"を使用して、オブジェクト構築をカスタマイズする {#customizing-object-construction-using-create}
 
 マッピングの一部を自分で操作したい場合、`create` コールバックを提供することができます。
 このコールバックが存在する場合、マッピングの一部をこちらでハンドリングすることができます。
@@ -196,7 +196,7 @@ var myChildModel = function(data) {
 }
 ```
 
-#### "update"を使用して、オブジェクトの更新をカスタマイズする{#customizing-object-updating-using-update}
+#### "update"を使用して、オブジェクトの更新をカスタマイズする {#customizing-object-updating-using-update}
 
 `update` コールバックで指定することにより、オブジェクトがどのように更新されるかをカスタマイズすることもできます。これは更新対象のオブジェクトと、`create` コールバックで使用されるものと同じ、 `options` オブジェクトを受け取ります。また更新された値を `return` する必要があります。
 
@@ -225,7 +225,7 @@ alert(viewModel.name());
 
 ダイアログにて `Grahamfoo` と表示されます！
 
-#### "ignore" を使用して特定のプロパティを無視する{#ignoring-certain-properties-using-ignore}
+#### "ignore" を使用して特定のプロパティを無視する {#ignoring-certain-properties-using-ignore}
 
 mapping プラグインに対し JavaScript オブジェクトのいくつかのプロパティを無視させたい（つまり、それらをマッピングしない）場合、無視するプロパティ名の配列を指定できます。
 
@@ -243,7 +243,7 @@ var oldOptions = ko.mapping.defaultOptions().ignore;
 ko.mapping.defaultOptions().ignore = ["alwaysIgnoreThis"];
 ```
 
-#### “include” を使用して特定のプロパティを含める{#including-certain-properties-using-include}
+#### “include” を使用して特定のプロパティを含める {#including-certain-properties-using-include}
 
 ビューモデルを元の JavaScript オブジェクトに変換する場合、デフォルトで元のビューモデルに含まれていたプロパティのみを含めます。ただし例外として、Knockout によって生成された `_destroy` プロパティは元のオブジェクトの一部でない場合にも含まれます。これは以下のようにカスタマイズすることができます。
 
@@ -261,7 +261,7 @@ var oldOptions = ko.mapping.defaultOptions().include;
 ko.mapping.defaultOptions().include = ["alwaysIncludeThis"];
 ```
 
-#### "copy" を使用して特定のプロパティをコピーする{#copying-certain-properties-using-copy}
+#### "copy" を使用して特定のプロパティをコピーする {#copying-certain-properties-using-copy}
 
 ビューモデルを元の JS オブジェクトに変換する場合、デフォルトでは、mapping プラグインは[上記](#how-things-are-mapped)で説明したルールに基づいて observable を作成します。プロパティに対してobservable にするのではなく単にコピーするよう mapping プラグインに強制したい場合、"copy" 配列にそのプロパティ名を追加します:
 
@@ -279,7 +279,7 @@ var oldOptions = ko.mapping.defaultOptions().copy;
 ko.mapping.defaultOptions().copy = ["alwaysCopyThis"];
 ```
 
-#### “observe” を使用して特定のプロパティのみを observable 化する{#observing-only-certain-properties-using-observe}
+#### “observe” を使用して特定のプロパティのみを observable 化する {#observing-only-certain-properties-using-observe}
 
 JavaScript オブジェクトのいくつかのプロパティの observable のみを作成して残りをコピーさせたい場合、observable にするプロパティ名の配列を指定することができます。
 
@@ -347,7 +347,7 @@ var result2 = ko.mapping.fromJS(data, { observe: "b[0].b1", copy: "b" });
 }
 ```
 
-#### 更新対象の指定{#specifying-the-update-target}
+#### 更新対象の指定 {#specifying-the-update-target}
 
 もし上記の例のようにクラスの内部でマッピングを実行する場合、`this` をマッピング操作の対象にしたいかもしれません。 `ko.mapping.fromJS` の三番目のパラメータは対象を示しています。例えば、
 
@@ -361,7 +361,7 @@ ko.mapping.fromJS(data, {}, someObject); // someObject のプロパティを上�
 ko.mapping.fromJS(data, {}, this);
 ```
 
-### 複数のソースからのマッピング{#mapping-from-multiple-sources}
+### 複数のソースからのマッピング {#mapping-from-multiple-sources}
 
 複数の `ko.mapping.fromJS` 呼び出しを適用することで、一つのビューモデルに対して複数の JavaScript オブジェクトを組み合わせることができます。例えば:
 
@@ -372,7 +372,7 @@ ko.mapping.fromJS(bob, bobMappingOptions, viewModel);
 
 それぞれの呼び出しで指定したマッピングオプションはマージされます。
 
-### マッピングされた observable array{#mapped-observable-array}
+### マッピングされた observable array {#mapped-observable-array}
 
 mappingプラグインによって生成された observable array は、`key` マッピングを使用可能な、いくつかの関数で拡張されています。
 
@@ -407,6 +407,6 @@ var newItem = result.mappedCreate({ id : 3 });
 
 この関数は最初にキーをチェックして、キーが既に存在する場合は例外を発生させます。次に、新しいオブジェクトを作成するために、create および update コールバックが存在すれば実行します。最後に、このオブジェクトを配列に追加し、それを返します。
 
-### ダウンロード{#download-1}
+### ダウンロード {#download-2}
 
 [Version 2.0](https://github.com/SteveSanderson/knockout.mapping/tree/master/build/output) (8.6kb minified)

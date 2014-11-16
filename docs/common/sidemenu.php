@@ -54,7 +54,7 @@ $menues = array(
 	'd;binding-preprocessing' => 'プリプロセスで Knockout の<br>バインディング記法を拡張',
 		
 	'<h2>;6' => 'プラグイン',
-	'd;plugins-mapping' => 'データ連携プラグイン<br>「Mapping」',
+	'plugins-mapping' => 'データ連携プラグイン<br>「Mapping」',
 	
 	'<h2>;7' => '詳細情報',
 	'browser-support' => 'ブラウザサポート',

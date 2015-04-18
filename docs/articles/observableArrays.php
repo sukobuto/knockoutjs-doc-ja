@@ -151,10 +151,10 @@ alert('最初の要素:  ' + myObservableArray()[0]);</pre>
 		<code>destroy</code> 関数と <code>destroyAll</code> 関数は主に Ruby on Rails を使用した開発に対する利便性のためにあります。
 	</p>
 	<ul>
-		<li><code>myObservableArray.remove(someItem)</code> <br><code>someItem</code> に一致するオブジェクトを全て検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
-		<li><code>myObservableArray.remove(function(item) { return item.age < 18 } )</code> <br>プロパティ <code>age</code> が18 より小さいオブジェクトを全て検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
-		<li><code>myObservableArray.removeAll(['Chad', 132, undefined])</code> <br><code>'Chad', 123, undefined</code> に一致するオブジェクトを全て検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
-		<li><code>myObservableArray.removeAll()</code> <br>全てのオブジェクトを検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
+		<li><code>myObservableArray.destroy(someItem)</code> <br><code>someItem</code> に一致するオブジェクトを全て検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
+		<li><code>myObservableArray.destroy(function(item) { return item.age < 18 } )</code> <br>プロパティ <code>age</code> が18 より小さいオブジェクトを全て検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
+		<li><code>myObservableArray.destroyAll(['Chad', 132, undefined])</code> <br><code>'Chad', 123, undefined</code> に一致するオブジェクトを全て検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
+		<li><code>myObservableArray.destroyAll()</code> <br>全てのオブジェクトを検索し、それらに <code>_destroy</code> という特別なプロパティを値 <code>true</code> とともに付与します。</li>
 	</ul>
 	
 	<p>

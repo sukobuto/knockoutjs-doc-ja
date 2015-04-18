@@ -37,7 +37,32 @@
 
 こちらの例ではコンポーネントを宣言してから、ビューにその2つのインスタンスを注入します。下記のソースコードを参照してください。
 
-# (ここにライブビューが入ります)
+
+<div class="liveExample">
+
+    <h4>First instance, without parameters</h4>
+    <message-editor></message-editor>
+
+    <h4>Second instance, passing parameters</h4>
+    <message-editor params="initialText: &quot;Hello, world!&quot;"></message-editor>
+
+<script type="text/javascript">
+
+/*<![CDATA[*/
+    ko.components.register('message-editor', {
+        viewModel: function(params) {
+            this.text = ko.observable(params.initialText || '');
+        },
+        template: 'Message: <input data-bind="value: text" /> '
+                + '(length: <span data-bind="text: text().length"></span>)'
+    });
+
+    ko.applyBindings();
+/*]]>*/
+
+</script>
+</div>
+
 
 ##### ソースコード: ビュー
 
@@ -151,7 +176,58 @@ ko.applyBindings();
 
 例えば、 `my-special-list` コンポーネントのテンプレートは `$componentTemplateNodes` を参照することができ、その出力は供給されたマークアップを含むことがｄけいます。以下が、完全な動作例です。
 
-# (ここにライブビューが入ります)
+
+<div class="liveExample" id="component-pass-markup">
+
+    <!-- This could be in a separate file -->
+    <template id="my-special-list-template">
+        <h3>Here is a special list</h3>
+
+        <ul data-bind="foreach: { data: myItems, as: 'myItem' }">
+            <li>
+                <h4>Here is another one of my special items</h4>
+                <!-- ko template: { nodes: $componentTemplateNodes, data: myItem } --><!-- /ko -->
+            </li>
+        </ul>
+    </template>
+
+    <my-special-list params="items: someArrayOfPeople">
+        <!-- Look, I'm putting markup inside a custom element -->
+        The person <em data-bind="text: name"></em>
+        is <em data-bind="text: age"></em> years old.
+    </my-special-list>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('component-pass-markup'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+    ko.components.register('my-special-list', {
+        template: { element: 'my-special-list-template' },
+        viewModel: function(params) {
+            this.myItems = params.items;
+        }
+    });
+
+    ko.applyBindings({
+        someArrayOfPeople: ko.observableArray([
+            { name: 'Lewis', age: 56 },
+            { name: 'Hathaway', age: 34 }
+        ])
+    });
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
+
 
 ##### ソースコード: ビュー
 

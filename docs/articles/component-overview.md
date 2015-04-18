@@ -50,7 +50,46 @@ ko.components.register('like-widget', {
 このコンポーネントを使用するには、 [`component` バインディング](./component-binding) または [カスタムエレメント](./component-custom-elements) によって、あなたのアプリケーション内に存在する他のビューから参照することができます。
 
 
-# (ここにライブビューが入ります)
+<div class="liveExample" id="component-inline">
+
+    <ul data-bind="foreach: products">
+        <li class="product">
+            <strong data-bind="text: name"></strong>
+            <like-widget params="value: userRating"></like-widget>
+        </li>
+    </ul>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('component-inline'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+    function Product(name, rating) {
+        this.name = name;
+        this.userRating = ko.observable(rating || null);
+    }
+
+    function MyViewModel() {
+        this.products = [
+            new Product('Garlic bread'),
+            new Product('Pain au chocolat'),
+            new Product('Seagull spaghetti', 'like') // This one was already 'liked'
+        ];
+    }
+
+    ko.applyBindings(new MyViewModel());
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
 
 
 #### ソースコード: ビュー
@@ -109,7 +148,50 @@ ko.components.register('like-or-dislike', {
 
 この *like-or-dislike* は、 [`component` バインディング](./component-binding) または [カスタムエレメント](./component-custom-elements) のいずれかによって、以前と同じように使用することができます。
 
-# (ここにライブビューが入ります)
+
+<div class="liveExample" id="component-amd">
+
+    <ul data-bind="foreach: products">
+        <li class="product">
+            <strong data-bind="text: name"></strong>
+            <like-or-dislike params="value: userRating"></like-or-dislike>
+        </li>
+    </ul>
+    <button data-bind="click: addProduct">Add a product</button>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('component-amd'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+    function Product(name, rating) {
+        this.name = name;
+        this.userRating = ko.observable(rating || null);
+    }
+
+    function MyViewModel() {
+        this.products = ko.observableArray(); // Start empty
+    }
+
+    MyViewModel.prototype.addProduct = function() {
+        var name = 'Product ' + (this.products().length + 1);
+        this.products.push(new Product(name));
+    };
+
+    ko.applyBindings(new MyViewModel());
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
+
 
 #### ソースコード: ビュー
 

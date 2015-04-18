@@ -12,7 +12,35 @@
 
 ### 実行例 {#live-example}
 
-# (ここにライブビューが入ります)
+
+<div class="liveExample">
+
+    <h4>First instance, without parameters</h4>
+    <div data-bind="component: &quot;message-editor&quot;"></div>
+
+    <h4>Second instance, passing parameters</h4>
+    <div data-bind="component: {
+        name: &quot;message-editor&quot;,
+        params: { initialText: &quot;Hello, world!&quot; }
+    }"></div>
+
+<script type="text/javascript">
+
+/*<![CDATA[*/
+    ko.components.register('message-editor', {
+        viewModel: function(params) {
+            this.text = ko.observable(params && params.initialText || '');
+        },
+        template: 'Message: <input data-bind="value: text" /> '
+                + '(length: <span data-bind="text: text().length"></span>)'
+    });
+
+    ko.applyBindings();
+/*]]>*/
+
+</script>
+</div>
+
 
 ##### ソースコード: ビュー
 

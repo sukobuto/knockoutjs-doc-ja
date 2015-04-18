@@ -52,7 +52,60 @@ PureComputedObservable を永続的なビューモデル内で使用すること
 
 以下のシンプルなウィザードインターフェイスの例では、`fullName` PureComputedObservable はその最終ステップのみでビューにバインドされ、そのステップがアクティブである時のみ更新されます。
 
-# (ここにライブビューが入ります)
+
+<div class="liveExample" id="wizard-example">
+
+<div class="log" data-bind="text: computedLog"></div>
+<!--ko if: step() == 0-->
+    <p>First name: <input data-bind="textInput: firstName" /></p>
+<!--/ko-->
+<!--ko if: step() == 1-->
+    <p>Last name: <input data-bind="textInput: lastName" /></p>
+<!--/ko-->
+<!--ko if: step() == 2-->
+    <div>Prefix: <select data-bind="value: prefix, options: ['Mr.', 'Ms.','Mrs.','Dr.']"></select></div>
+    <h2>Hello, <span data-bind="text: fullName"> </span>!</h2>
+<!--/ko-->
+<p><button type="button" data-bind="click: next">Next</button></p>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('wizard-example'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+function AppData() {
+    this.firstName = ko.observable('John');
+    this.lastName = ko.observable('Burns');
+    this.prefix = ko.observable('Dr.');
+    this.computedLog = ko.observable('Log: ');
+    this.fullName = ko.pureComputed(function () {
+        var value = this.prefix() + " " + this.firstName() + " " + this.lastName();
+        // Normally, you should avoid writing to observables within a pure computed
+        // observable (avoiding side effects). But this example is meant to demonstrate
+        // its internal workings, and writing a log is a good way to do so.
+        this.computedLog(this.computedLog.peek() + value + '; ');
+        return value;
+    }, this);
+
+    this.step = ko.observable(0);
+    this.next = function () {
+        this.step(this.step() === 2 ? 0 : this.step()+1);
+    };
+};
+ko.applyBindings(new AppData());
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
+
 
 #### ソースコード: ビュー
 

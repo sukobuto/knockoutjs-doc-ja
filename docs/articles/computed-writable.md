@@ -15,7 +15,51 @@
 
 クラシックな "ファーストネーム+ラストネーム=フルネーム" の例に立ち戻って、あなたは後ろから前の内容に戻すことができます: `fullName` を書き込み可能な ComputedObservable にすることで、ユーザは直接フルネームを編集することができ、彼らが入力した値は解析され、元の `firstName` と `lastName` の Observable に戻ってマッピングされます。この例では、 `write` コールバックは入力されたテキストを "firstName" と "lastName" の構成要素に分割して、それらの値を元の Observable に書き込みます。
 
-# ここに実行例が入ります
+
+<div class="liveExample" id="decompose-input">
+
+    <div>First name: <span data-bind="text: firstName"></span></div>
+    <div>Last name: <span data-bind="text: lastName"></span></div>
+    <div class="heading">Hello, <input data-bind="textInput: fullName" /></div>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('decompose-input'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+    function MyViewModel() {
+        this.firstName = ko.observable('Planet');
+        this.lastName = ko.observable('Earth');
+
+        this.fullName = ko.pureComputed({
+            read: function () {
+                return this.firstName() + " " + this.lastName();
+            },
+            write: function (value) {
+                var lastSpacePos = value.lastIndexOf(" ");
+                if (lastSpacePos > 0) { // Ignore values with no space character
+                    this.firstName(value.substring(0, lastSpacePos)); // Update "firstName"
+                    this.lastName(value.substring(lastSpacePos + 1)); // Update "lastName"
+                }
+            },
+            owner: this
+        });
+    }
+
+    ko.applyBindings(new MyViewModel());
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
+
 
 #### ソースコード: ビュー
 
@@ -58,7 +102,53 @@ ko.applyBindings(new MyViewModel());
 
 選択可能な項目のリストをユーザに提示する際には、しばしば全項目の選択または選択解除するための方法を含んでいることが有用です。これは、全ての項目が選択されているかどうかを表すブール値によって、かなり直感的に表現することができます。 `true` に設定すると全ての項目が選択され、 `false` に設定すると全項目の選択が解除されます。
 
-# ここに実行例が入ります
+
+<div class="liveExample" id="select-all-items">
+
+    <div class="heading">
+        <input type="checkbox" data-bind="checked: selectedAllProduce" title="Select all/none" /> Produce
+    </div>
+    <div data-bind="foreach: produce">
+        <label>
+            <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.selectedProduce" />
+            <span data-bind="text: $data"></span>
+        </label>
+    </div>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('select-all-items'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+    function MyViewModel() {
+        this.produce = [ 'Apple', 'Banana', 'Celery', 'Corn', 'Orange', 'Spinach' ];
+        this.selectedProduce = ko.observableArray([ 'Corn', 'Orange' ]);
+        this.selectedAllProduce = ko.pureComputed({
+            read: function () {
+                // Comparing length is quick and is accurate if only items from the
+                // main array are added to the selected array.
+                return this.selectedProduce().length === this.produce.length;
+            },
+            write: function (value) {
+                this.selectedProduce(value ? this.produce.slice(0) : []);
+            },
+            owner: this
+        });
+    }
+    ko.applyBindings(new MyViewModel());
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
+
 
 #### ソースコード: ビュー
 
@@ -99,7 +189,48 @@ ko.applyBindings(new MyViewModel());
 
 ときには、保存されているものと異なる書式でデータを表示したいことがあると思います。例えば、ある価格情報が float 値で保存されているけれど、ユーザには固定少数点数で通貨記号を含めた編集を許可したいといった場合です。書き込み可能 ComputedObservable を使えば、フォーマットされた価格を表現し、背後にある float 値に対して受け付けた入力をマッピングすることができます。
 
-# ここに実行例が入ります
+
+<div class="liveExample" id="value-converter">
+
+    <div>Enter bid price: <input data-bind="textInput: formattedPrice" /></div>
+    <div>(Raw value: <span data-bind="text: price"></span>)</div>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('value-converter'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+    function MyViewModel() {
+        this.price = ko.observable(25.99);
+
+        this.formattedPrice = ko.pureComputed({
+            read: function () {
+                return '$' + this.price().toFixed(2);
+            },
+            write: function (value) {
+                // Strip out unwanted characters, parse as float, then write the
+                // raw data back to the underlying "price" observable
+                value = parseFloat(value.replace(/[^\.\d]/g, ""));
+                this.price(isNaN(value) ? 0 : value); // Write to underlying storage
+            },
+            owner: this
+        });
+    }
+
+    ko.applyBindings(new MyViewModel());
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
+
 
 #### ソースコード: ビュー
 
@@ -139,7 +270,50 @@ ko.applyBindings(new MyViewModel());
 
 この手順をさらに進めてみましょう。 `isValid` フラグを設けることで、最後に入力された値が条件を満たさないときだけ、エラーメッセージを表示するようにできます。バリデーションを実現するより簡単な方法がありますが(後述)、まずは次の ViewModel でメカニズムを説明致します。
 
-# ここに実行例が入ります
+
+<div class="liveExample" id="validate-input">
+
+    <div>Enter a numeric value: <input data-bind="textInput: attemptedValue" /></div>
+    <div class="error" data-bind="visible: !lastInputWasValid()">That's not a number!</div>
+    <div>(Accepted value: <span data-bind="text: acceptedNumericValue"></span>)</div>
+
+<script type="text/javascript">
+
+// Temporarily redirect ko.applyBindings to scope it to this live example
+var realKoApplyBindings = ko.applyBindings;
+ko.applyBindings = function() {
+	if (arguments.length === 1)
+		return ko.applyBindings(arguments[0], document.getElementById('validate-input'));
+	return realKoApplyBindings.apply(ko, arguments);
+}
+
+/*<![CDATA[*/
+    function MyViewModel() {
+        this.acceptedNumericValue = ko.observable(123);
+        this.lastInputWasValid = ko.observable(true);
+
+        this.attemptedValue = ko.pureComputed({
+            read: this.acceptedNumericValue,
+            write: function (value) {
+                if (isNaN(value))
+                    this.lastInputWasValid(false);
+                else {
+                    this.lastInputWasValid(true);
+                    this.acceptedNumericValue(value); // Write to underlying storage
+                }
+            },
+            owner: this
+        });
+    }
+
+    ko.applyBindings(new MyViewModel());
+/*]]>*/
+
+ko.applyBindings = realKoApplyBindings;
+
+</script>
+</div>
+
 
 #### ソースコード: ビュー
 

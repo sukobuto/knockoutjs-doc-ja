@@ -13,7 +13,7 @@ ComputedObservable は次の形式により生成できます。
 
 	* `targetObject` — この値が与えられた場合、評価関数を実行する際の `this` の値として定義します。詳細は ['this'の管理](./computedObservables#managing-this) のセクションを読んで下さい。
 
-	* `options` — 付加的なプロパティを含むオブジェクトです。内容は。次の完全なリストを参照して下さい。
+	* `options` — 付加的なプロパティを含むオブジェクトです。内容は、後述の完全なリストを参照して下さい。
 
 2. `ko.computed(options)` — 次のプロパティを含むJavaScriptオブジェクトにより生成するシングルパラメータ形式です。
 
@@ -39,19 +39,19 @@ ComputedObservable は次の形式により生成できます。
 
 ComputedObservable は次の関数を提供しています。
 
-	* `dispose()` — 手動により ComputedObservable を破棄し、依存のためのすべてのサブスクリプションをクリアします。これは ComputedObservable が更新されるのを止めたい場合や、破棄されない Observable への依存をもつ ComputedObservable に使用されているメモリを解放したい場合に便利な機能です。
+* `dispose()` — 手動で ComputedObservable を破棄し、依存対象へのすべてのサブスクリプションをクリアします。これは ComputedObservable が更新されるのを止めたい場合や、破棄されない Observable への依存を持つ ComputedObservable で使用されているメモリを解放したい場合に便利な機能です。
 
-	* `extend(extenders)` — ComputedObservable に、与えられた[extenders](./extenders) を適用します。
+* `extend(extenders)` — ComputedObservable に、与えられた[extenders](./extenders) を適用します。
 
-	* `getDependenciesCount()` — ComputedObservable が現在依存している対象の数を返却します。
+* `getDependenciesCount()` — ComputedObservable が現在依存している対象の数を返却します。
 
-	* `getSubscriptionsCount( [event] )` — 対象のComputedObservable について、現在設定されているサブスクリプションの数(他の ComputedObservable か、または手動サブスクリプションによる)を返します。オプションでイベント名( `"change"` のような)を渡すことにより、そのイベントに対するサブスクリプションの数のみを返します。
+* `getSubscriptionsCount( [event] )` — 対象のComputedObservable について、現在設定されているサブスクリプションの数(他の ComputedObservable か、または手動サブスクリプションによる)を返します。オプションでイベント名( `"change"` のような)を渡すことにより、そのイベントに対するサブスクリプションの数のみを返します。
 
-	* `isActive()` — ComputedObservable が更新される可能性がある場合、trueを返却します。ほかの Observable に対する依存を持たない ComputedObservable であればfalseを返却します。
+* `isActive()` — ComputedObservable が更新される可能性がある場合、trueを返却します。ほかの Observable に対する依存を持たない ComputedObservable であればfalseを返却します。
 
-	* `peek()` — 依存を生成せずに、ComputedObservable の現在の値を取得します。( [peek](./computed-dependency-tracking#controlling-dependencies-using-peek) のセクションを参照して下さい。)
+* `peek()` — 依存を生成せずに、ComputedObservable の現在の値を取得します。( [peek](./computed-dependency-tracking#controlling-dependencies-using-peek) のセクションを参照して下さい。)
 
-	* `subscribe(callback[,callbackTarget,event])` — ComputedObservableからの変更通知を受け取るために [手動サブスクリプション](./observables#explicitly-subscribing-to-observables) を登録します。
+* `subscribe(callback[,callbackTarget,event])` — ComputedObservableからの変更通知を受け取るために [手動サブスクリプション](./observables#explicitly-subscribing-to-observables) を登録します。
 
 ### computedContext の使用 {#using-the-computed-context}
 
@@ -79,5 +79,4 @@ var myComputed = ko.computed(function() {
 });
 ```
 
-これらの機能は典型的には高度なシナリオでのみ有用であり、例えばあなたのComputedObservable の主目的がその評価の間にいくつかの他の作用をトリガすることであり、何らかのセットアップロジックを実行するのを初回の実行時のみ、
-または少なくとも1つ以上の依存関係を持っている時のみ（そして、将来的に再評価される場合がある）にしたい場合等です 。ほとんどの ComputedObservable のプロパティは、それが以前に評価されているかどうか、またはそれがいくつの依存関係を持っているかを気にする必要はありません。
+これらの機能は典型的には高度なシナリオでのみ有用であり、例えばあなたのComputedObservable の主目的がその評価の間にいくつかの他の作用をトリガすることであり、何らかのセットアップロジックを実行するのを初回の実行時のみ、または少なくとも1つ以上の依存関係を持っている時のみ（そして、将来的に再評価される場合がある）にしたい場合等です 。ほとんどの ComputedObservable のプロパティは、それが以前に評価されているかどうか、またはそれがいくつの依存関係を持っているかを気にする必要はありません。

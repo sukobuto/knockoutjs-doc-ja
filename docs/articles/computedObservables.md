@@ -30,7 +30,7 @@ function AppViewModel() {
 The name is <span data-bind="text: fullName"></span>
 ```
 
-これで、 `firstName` か `lastName` の何れかに変更があれば更新されます。(ko.computed に渡した評価関数は、依存しているいずれかのプロパティが変更される度に呼び出されます。評価関数の戻り値もまた、その都度UIエレメントや別の ComputedObservable など監視側に通知されます。)
+これで、 `firstName` か `lastName` のいずれかに変更があれば表示が更新されます。(ko.computed に渡した評価関数は、依存しているいずれかのプロパティが変更される度に呼び出されます。評価関数の戻り値もまた、その都度UIエレメントや別の ComputedObservable など監視側に通知されます。)
 
 ### 依存チェーンは続くよ　(あなたが望む限り)　どこまでも {#dependency-chains-just-work}
 
@@ -45,7 +45,7 @@ The name is <span data-bind="text: fullName"></span>
 
 ### 'this'の管理 {#managing-this}
 
-上記の例で、 `ko.computed` の２つ目の引数( `this` を渡していること)について疑問を持たれた方がいらっしゃるかと思います。これはComputedObservable内部で使用される `this` を指定しています。このthisを渡さない場合、 `this.firstName()` や `this.lastName()` を参照できなくなってしまいます。JavaScriptに精通している方にとっては明白ですが、そうでない方にとってはやや不可思議に見えるかもしれません。(C#やJavaではプログラマが `this` の値を設定することはありません。しかしJavaScriptでは、functionというものが本質的にはどんなオブジェクトにも属さないため、thisの値を設定できるようになっているのです。)
+上記の例で、 `ko.computed` の２つ目の引数( `this` を渡していること)について疑問を持たれた方がいらっしゃるかと思います。これは ComputedObservable 内部で使用される `this` を指定しています。このthisを渡さない場合、 `this.firstName()` や `this.lastName()` を参照できなくなってしまいます。JavaScriptに精通している方にとっては明白ですが、そうでない方にとってはやや不可思議に見えるかもしれません。(C#やJavaではプログラマが `this` の値を設定することはありません。しかしJavaScriptでは、functionというものが本質的にはどんなオブジェクトにも属さないため、thisの値を設定できるようになっているのです。)
 
 #### 簡略化のための常套手段 {#a-popular-convention-that-simplifies-things}
 
@@ -81,7 +81,7 @@ this.fullName = ko.pureComputed(function() {
 
 ### ComputedObserfable が常に購読者に通知するよう強制する {#forcing-computed-observables-to-always-notify-subscribers}
 
-ComputedObserfable がプリミティブな値を返す場合 (数値、文字列、ブール値、またはnull)、その依存対象は、値が実際に変更された場合のみ通知されます。しかし、組み込みの [通知拡張](./extenders) を使用することで、 ComputedObservable の購読者が、たとえ変更後の値が同じでも、更新のたびに通知を受け取るようにすることが可能です。
+ComputedObserfable がプリミティブな値を返す場合 (数値、文字列、ブール値、またはnull)、その依存対象は、値が実際に変更された場合のみ通知を受け取ります。しかし、組み込みの [`notify`拡張](./extenders) を使用することで、 ComputedObservable の購読者が、たとえ変更後の値が同じでも、更新のたびに通知を受け取るようにすることが可能です。
 あなたは以下のように、この拡張を適用できます：
 
 ```javascript
@@ -94,7 +94,7 @@ myViewModel.fullName = ko.pureComputed(function() {
 
 通常、ComputedObservable は、その依存関係が変更されると、更新と通知をその購読者に対して直ちに行います。
 しかし、ComputedObservable が多くの依存関係を持っていたり、負荷の高い更新処理を伴う場合、ComputedObservable の更新と通知を制限したり遅延させることで、より良いパフォーマンスを得ることができます。
-これは、以下のように [レート制限拡張](./rateLimit-observable) を使用することで達成されます。
+これは、以下のように [ `rateLimit` 拡張](./rateLimit-observable) を使用することで達成されます。
 
 ```javascript
 // Ensure updates no more than once per 50-millisecond period
@@ -103,7 +103,7 @@ myViewModel.fullName.extend({ rateLimit: 50 });
 
 ### プロパティが ComputedObservable かどうかを判定する {#determining-if-a-property-is-a-computed-observable}
 
-ComputedObservable であるかどうかをプログラム上で判定できると便利なことがあります。Knockoutは `ko.isComputed` というユーリティティ関数を提供しています。例えばComputedObservableの値を除外してサーバに送信したい場合などでは、次のようにします。
+ComputedObservable であるかどうかをプログラム上で判定できると便利なことがあります。Knockoutは `ko.isComputed` というユーリティティ関数を提供しています。例えば ComputedObservable の値を除外してサーバに送信したい場合などでは、次のようにします。
 
 ```javascript
 for (var prop in myObject) {
@@ -113,11 +113,11 @@ for (var prop in myObject) {
 }
 ```
 
-ほかにも、KnockoutはObservableおよびComputedObservableのために次ような関数を用意しています。
+ほかにも、Knockoutは Observable および ComputedObservable のために次のような関数を用意しています。
 
-* `ko.isObservable` - Observable,ObservableArrayおよびすべてのComputedObservableであればtrueを返します。
+* `ko.isObservable` - Observable , ObservableArray または何らかのComputedObservableであれば true を返します。
 
-* `ko.isWriteableObservable` - Observable、 ObservableArray、および書き込み可能ComputedObservableであればtrueを返します (ko.isWriteableObservable のエイリアスです)。
+* `ko.isWriteableObservable` - Observable、 ObservableArray、および書き込み可能な ComputedObservable であればtrueを返します (ko.isWriteableObservable のエイリアスです)。
 
 ### ComputedObservable があなたのUIのみで使用されている場合 {#when-the-computed-observable-is-only-used-in-your-ui}
 

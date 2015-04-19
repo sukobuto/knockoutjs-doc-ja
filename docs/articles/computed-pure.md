@@ -1,17 +1,16 @@
 # PureComputedObservable
 
 Knockout 3.2.0 で導入された PureComputedObservables は、ほとんどのアプリケーションにおいて 通常の ComputedObserfable よりも優れたパフォーマンスとメモリ上の利点を提供します。
-PureComputedObservable は自身の購読者が存在しない場合、その依存関係へのサブスクリプションを維持しないためです。この機能は：
+PureComputedObservable は自身のサブスクライバ(=購読者)が存在しない場合、その依存対象へのサブスクリプション(=購読状態)を維持しないためです。この機能は：
 
-* すでにアプリケーションで参照されていないが、その依存関係がまだ存在している ComputedObservable によるメモリリークを防止します。
+* すでにアプリケーションで参照されていないが、その依存対象がまだ存在している ComputedObservable によるメモリリークを防止します。
 * その値が観測されていない場合、ComputedObservable を再計算しないことで、計算によるオーバーヘッドを削減します。
 
 PureComputedObservable は、その`change` サブスクライバに基づいて自動的に2つの状態の間で切り替わります。
 
-1. `change` サブスクライバを持っていないときは常に、 * sleeping * 状態です。 sleeping 状態に入る時は、その依存関係の全てのサブスクリプションは破棄されます。
-この状態の間は、評価関数内でアクセスしている全てのObservable は観測されません (Observable のトラッキングは保持され続けます)。もし、 ComputedObservable の値が sleeping 状態中に読み取られた場合、 その値はその依存関係のいずれかが変更されると自動的に再評価されます。
+1. `change` サブスクライバを持っていないときは常に、 * sleeping * 状態です。 sleeping 状態に入る時は、その依存関係の全てのサブスクリプションは破棄されます。この状態の間は、評価関数内でアクセスしている全てのObservable は観測されません (Observable のトラッキングは保持され続けます)。もし、 ComputedObservable の値が sleeping 状態中に読み取られた場合、 その値はその依存対象の変更状態によって自動的に再評価されます。
 
-2. 何らかの `change` サブスクライバを持っている時は、目を覚ましており * listening * 状態です。リスニング状態に入ると、即座にすべての依存関係をサブスクライブします。
+2. 何らかの `change` サブスクライバを持っている時は、目を覚ましており * listening * 状態です。listening 状態に入ると、即座にすべての依存関係をサブスクライブ(=購読)します。
 この状態では、 [依存トラッキングの仕組み](./computed-dependency-tracking) で説明されているように、通常のComputedObservable のように動作します。
 
 #### 何故 "pure" ?
@@ -19,7 +18,7 @@ PureComputedObservable は、その`change` サブスクライバに基づいて
 私たちはこの単語を、[pure functions](http://en.wikipedia.org/wiki/Pure_function) から借りてきました。なぜなら、この機能は一般的に、 その評価関数が以下のように pure function である ComputeObservable  のみに適用できるからです。
 
 1. ComputedObservable の評価がいかなる副作用も引き起こさない。
-2. ComputedObservable の値は、 評価の数や、他の "隠された" 情報に基づいて変化すべきではない。その値は　pure function の定義において、その引数によって値が考慮されるのと同様に、アプリケーション内の他のobservable の値のみに基づく べきである。
+2. ComputedObservable の値は、 評価の数や、他の "隠された" 情報に基づいて変化すべきではない。その値は　pure function の定義において、その引数によって値が考慮されるのと同様に、アプリケーション内の他のobservable の値のみに基づくべきである。
 
 #### 構文
 
@@ -43,12 +42,7 @@ this.fullName = ko.computed(function() {
 
 ### PureComputedObservable を使用すべき時 {#when-to-use-a-pure-computed-observable}
 
-あなたは [pure function ガイドライン](./computed-pure#pure-computed-function-defined) に従って、全てのComputedObservable に対して Pure 機能を使用することができます。
-
-一時的なビューとビューモデルによって使用され、共有される永続的なビューモデルを含むアプリケーションの設計に適用された場合、ほとんどの利益を得るでしょう。
-PureComputedObservable を永続的なビューモデル内で使用することは、計算のパフォーマンス上の利点を提供します。
-
-一時的なビューモデル内でそれらを使用することは、メモリ管理上の利点を提供します。
+あなたは [pure function ガイドライン](./computed-pure#pure-computed-function-defined) に従って、全てのComputedObservable に対して Pure 機能を使用することができます。しかしながら、一時的なビューとビューモデルによって使用され、共有される永続的なビューモデルを含むアプリケーションの設計に適用された場合、最も利益を得るでしょう。PureComputedObservable を永続的なビューモデル内で使用することは、計算のパフォーマンス上の利点を提供します。一時的なビューモデル内でそれらを使用することは、メモリ管理上の利点を提供します。
 
 以下のシンプルなウィザードインターフェイスの例では、`fullName` PureComputedObservable はその最終ステップのみでビューにバインドされ、そのステップがアクティブである時のみ更新されます。
 
@@ -153,7 +147,7 @@ ko.applyBindings(new AppData());
 
 #### 副作用
 
-あなたは、その依存関係が変更されたときにアクションを実行することを意図する ComputedObservable では、PureComputedObservable を使用すべきではありません。例としては：
+あなたは、その依存対象が変更されたときにアクションを実行することを意図する ComputedObservable では、PureComputedObservable を使用すべきではありません。例としては：
 
 * 複数の Observable に基づいてコールバックを実行するために ComputedObservable を使用している場合。
 
@@ -176,11 +170,11 @@ ko.computed({
 ```
 
 もし、評価が重要な副作用を持っている場合、PureComputedObservable を使用すべきでない理由としては、単にPureComputedObservable がアクティブなサブスクライバを持たない (つまり sleeping 状態である) 場合、評価が実行されないからです。
-依存関係の変更によって、常に評価を実行することが重要な場合は、代わりに [通常の ComputedObservable](./computedObservables) を使用します。
+依存対象の変更によって、常に評価を実行することが重要な場合は、代わりに [通常の ComputedObservable](./computedObservables) を使用します。
 
 ### 状態変化の通知 {#state-change-notifications}
 
-PureComputedObservableは、それが `listening` 状態に入るたびに  (その現在の値を使用して) `awake` イベントを通知し、それが `sleeping` 状態に入るたびに（ `undefined`値を使用して）`asleep`イベントを通知します。
+PureComputedObservableは、それが `listening` 状態に入るたびに  (その現在の値を使用して) `awake` イベントを通知し、それが `sleeping` 状態に入るたびに（ `undefined` 値を使用して） `asleep` イベントを通知します。
 通常は、あなたは ComputedObservable の内部状態について知る必要はありません。しかし、内部状態はComputedObservable がビューにバインドされているかどうかに準ずるため、その情報を何らかのビューモデルの初期化やクリーンアップのために使用できるかもしれません。
 
 ```javascript
@@ -197,4 +191,4 @@ this.someComputedThatWillBeBound.subscribe(function () {
 }, this, "asleep");
 ```
 
-( `awake`イベントは` deferEvaluation`オプションによって作成された通常の ComputedObservable にも適用されます。)
+( `awake`イベントは `deferEvaluation` オプションによって作成された通常の ComputedObservable にも適用されます。)
